@@ -1,14 +1,13 @@
-import logo from './logo.svg';
 import './App.css';
+import {Outlet} from 'react-router-dom';
 import Nav from "./component/nav/Nav";
-import Home from "./page/home/Home";
 
 function App() {
   return (
-  <div>
-    <Nav/>
-    <Home/>
-  </div>
+    <div>
+      <Nav/>
+      <Outlet/>
+    </div>
   );
 }
 

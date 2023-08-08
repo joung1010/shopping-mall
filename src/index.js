@@ -9,12 +9,14 @@ import Carts from "./page/carts/Carts";
 import NewProduct from "./page/newProduct/NewProduct";
 import ProductDetail from "./page/productDetail/ProductDetail";
 import Home from "./page/home/Home";
+import NotFound from "./page/notFound/NotFound";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
     {
         path:'/',
         element:<App/>,
+        errorElement: <NotFound/>,
         children: [
             {index:true,element:<Home/>},
             {path:'/products',element: <Products/>},
@@ -27,7 +29,7 @@ const router = createBrowserRouter([
 
 root.render(
   <React.StrictMode>
-    <App />
+      <RouterProvider router={router}/>
   </React.StrictMode>
 );
 
