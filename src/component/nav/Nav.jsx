@@ -3,6 +3,7 @@ import {FaPencil} from 'react-icons/fa6'
 import {BiShoppingBag} from 'react-icons/bi'
 import {Link} from 'react-router-dom'
 import {useLoginApi} from "../../context/LoginContext";
+import User from "../User";
 
 
 function Nav(props) {
@@ -39,6 +40,7 @@ function Nav(props) {
                 <Link to='/products'>Products</Link>
                 <Link to='/carts'>Carts</Link>
                 <Link to='/products/new' className='text-2xl'><FaPencil/></Link>
+                {user && <User user={user}/>}
                 {!user && <button onClick={handleLogin}>Login</button>}
                 {user && <button onClick={handleLogOut}>Logout</button>}
             </nav>
