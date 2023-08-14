@@ -15,21 +15,6 @@ function Nav(props) {
         });
     }, []);
 
-    
-    const handleLogin = () => {
-        loginService.loginPop()
-            .then(result => {
-                return result.user;
-            })
-            .then(setUser)
-            .catch(console.error);
-    };
-    const handleLogOut = () => {
-        loginService.logout()
-            .then(setUser);
-    };
-
-
     return (
         <header className='flex justify-between border-b border-gray-300 p-2'>
             <Link className='flex items-center text-4xl text-brand' to='/'>
@@ -41,8 +26,8 @@ function Nav(props) {
                 <Link to='/carts'>Carts</Link>
                 <Link to='/products/new' className='text-2xl'><FaPencil/></Link>
                 {user && <User user={user}/>}
-                {!user && <button onClick={handleLogin}>Login</button>}
-                {user && <button onClick={handleLogOut}>Logout</button>}
+                {!user && <button onClick={loginService.loginPop}>Login</button>}
+                {user && <button onClick={loginService.logout}>Logout</button>}
             </nav>
 
         </header>
