@@ -3,7 +3,8 @@ import {FaPencil} from 'react-icons/fa6'
 import {BiShoppingBag} from 'react-icons/bi'
 import {Link} from 'react-router-dom'
 import {useLoginApi} from "../../context/LoginContext";
-import User from "../User";
+import User from "../user/User";
+import Button from "../ui/Button";
 
 
 function Nav(props) {
@@ -24,10 +25,10 @@ function Nav(props) {
             <nav className='flex items-center gap-4 font-semibold'>
                 <Link to='/products'>Products</Link>
                 <Link to='/carts'>Carts</Link>
-                <Link to='/products/new' className='text-2xl'><FaPencil/></Link>
+                {user && user.isAdmin && <Link to='/products/new' className='text-2xl'><FaPencil/></Link>}
                 {user && <User user={user}/>}
-                {!user && <button onClick={loginService.loginPop}>Login</button>}
-                {user && <button onClick={loginService.logout}>Logout</button>}
+                {!user && <Button text='Login' onClick={loginService.loginPop}/>}
+                {user && <Button text='Logout' onClick={loginService.logout}/>}
             </nav>
 
         </header>
