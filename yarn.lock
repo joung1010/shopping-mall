@@ -7468,6 +7468,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"gapi-script@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "gapi-script@npm:1.2.0"
+  checksum: f61140855e9a4369de15badb2f4568fdd037d949561de5fd86eca379b89423301bc6062748aba6bd1be68a5329f6239ca9c4b6b5fe454ad6046b6b918979d1ba
+  languageName: node
+  linkType: hard
+
 "gauge@npm:^4.0.3":
   version: 4.0.4
   resolution: "gauge@npm:4.0.4"
@@ -12630,6 +12637,7 @@ __metadata:
     "@testing-library/react": ^13.0.0
     "@testing-library/user-event": ^13.2.1
     firebase: ^10.1.0
+    gapi-script: ^1.2.0
     react: ^18.2.0
     react-dom: ^18.2.0
     react-icons: ^4.10.1

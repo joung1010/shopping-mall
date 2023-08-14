@@ -6,7 +6,16 @@ export default class LoginService {
     loginPop() {
         return signInWithPopup(this.auth, this.#getProvider());
     }
-    getCredential(result) {
+
+    getUserToken(result) {
+        return this.#getCredential(result).accessToken;
+    }
+
+    logOut() {
+
+    }
+
+    #getCredential(result) {
         return GoogleAuthProvider.credentialFromResult(result);
     }
     #getProvider() {
