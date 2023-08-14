@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FaPencil} from 'react-icons/fa6'
 import {BiShoppingBag} from 'react-icons/bi'
 import {Link} from 'react-router-dom'
@@ -8,7 +8,13 @@ import {useLoginApi} from "../../context/LoginContext";
 function Nav(props) {
     const [user, setUser] = useState();
     const loginService = useLoginApi();
+    useEffect(() => {
+        loginService.onUserStateChange((user) => {
+            setUser(user);
+        });
+    }, []);
 
+    
     const handleLogin = () => {
         loginService.loginPop()
             .then(result => {
@@ -18,7 +24,7 @@ function Nav(props) {
             .catch(console.error);
     };
     const handleLogOut = () => {
-        loginService.logOut()
+        loginService.logout()
             .then(setUser);
     };
 
