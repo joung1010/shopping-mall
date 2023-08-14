@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {FaPencil} from 'react-icons/fa6'
 import {BiShoppingBag} from 'react-icons/bi'
 import {Link} from 'react-router-dom'
@@ -6,15 +6,20 @@ import {useLoginApi} from "../../context/LoginContext";
 
 
 function Nav(props) {
+    const [user, setUser] = useState();
     const loginService = useLoginApi();
-    const handleOnClick = () => {
-        return  loginService.loginPop()
+
+    const handleLogin = () => {
+        loginService.loginPop()
             .then(result => {
-                const token = loginService.getUserToken(result);
-                const user = result.user;
-                console.log(token, user);
+                return result.user;
             })
+            .then(setUser)
             .catch(console.error);
+    };
+    const handleLogOut = () => {
+        loginService.logOut()
+            .then(setUser);
     };
 
 
@@ -28,7 +33,8 @@ function Nav(props) {
                 <Link to='/products'>Products</Link>
                 <Link to='/carts'>Carts</Link>
                 <Link to='/products/new' className='text-2xl'><FaPencil/></Link>
-                <button onClick={handleOnClick}>Login</button>
+                {!user && <button onClick={handleLogin}>Login</button>}
+                {user && <button onClick={handleLogOut}>Logout</button>}
             </nav>
 
         </header>

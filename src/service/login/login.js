@@ -1,9 +1,9 @@
-import { getAuth,GoogleAuthProvider,signInWithPopup } from "firebase/auth";
+import { getAuth,GoogleAuthProvider,signInWithPopup,signOut } from "firebase/auth";
 export default class LoginService {
     constructor(app) {
         this.auth = getAuth(app);
     }
-    loginPop() {
+    async loginPop() {
         return signInWithPopup(this.auth, this.#getProvider());
     }
 
@@ -11,8 +11,8 @@ export default class LoginService {
         return this.#getCredential(result).accessToken;
     }
 
-    logOut() {
-
+    async logOut() {
+        return signOut(this.auth).then(() => null);
     }
 
     #getCredential(result) {
