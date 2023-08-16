@@ -8,13 +8,7 @@ import Button from "../ui/Button";
 
 
 function Nav(props) {
-    const [user, setUser] = useState();
-    const loginService = useLoginApi();
-    useEffect(() => {
-        loginService.onUserStateChange((user) => {
-            setUser(user);
-        });
-    }, []);
+    const {user,login,logout} = useLoginApi();
 
     return (
         <header className='flex justify-between border-b border-gray-300 p-2'>
@@ -24,11 +18,11 @@ function Nav(props) {
             </Link>
             <nav className='flex items-center gap-4 font-semibold'>
                 <Link to='/products'>Products</Link>
-                <Link to='/carts'>Carts</Link>
+                {user && <Link to='/carts'>Carts</Link>}
                 {user && user.isAdmin && <Link to='/products/new' className='text-2xl'><FaPencil/></Link>}
                 {user && <User user={user}/>}
-                {!user && <Button text='Login' onClick={loginService.loginPop}/>}
-                {user && <Button text='Logout' onClick={loginService.logout}/>}
+                {!user && <Button text='Login' onClick={login}/>}
+                {user && <Button text='Logout' onClick={logout}/>}
             </nav>
 
         </header>

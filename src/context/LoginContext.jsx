@@ -1,4 +1,4 @@
-import {createContext, useContext} from "react";
+import {createContext, useContext, useEffect, useState} from "react";
 import LoginService from "../service/login/login";
 import {getFireBaseAuth, getFireBaseDatabase} from "../service/config/firebase";
 
@@ -8,9 +8,15 @@ const auth = getFireBaseAuth();
 
 const loginService = new LoginService(auth,database);
 export  function LoginProvider({children}) {
+    const [user, setUser] = useState();
+    useEffect(() => {
+        loginService.onUserStateChange((user) => {
+            setUser(user);
+        });
+    }, []);
     return (
         <LoginContext.Provider
-            value = {loginService}
+            value = {{user,login:loginService.loginPop,logout:loginService.logout}}
         >
             {children}
         </LoginContext.Provider>

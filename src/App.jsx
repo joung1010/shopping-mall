@@ -5,12 +5,10 @@ import {LoginProvider} from "./context/LoginContext";
 
 function App() {
     return (
-        <>
-            <LoginProvider>
-                <Nav/>
-                <Outlet/>
-            </LoginProvider>
-        </>
+        <LoginProvider>
+            <Nav/>
+            <Outlet/>
+        </LoginProvider>
     );
 }
 
