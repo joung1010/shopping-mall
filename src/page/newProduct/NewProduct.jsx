@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import Button from "../../component/ui/Button";
+import UploadService from "../../service/upload/uploadService";
 
 function NewProduct(props) {
     const [products,setProducts]= useState({});
@@ -8,6 +9,12 @@ function NewProduct(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         // 제품 사진을 업로드 후 URL 획득
+        const uploader = new UploadService();
+        uploader.upload(file)
+            .then(url => {
+                console.log(url);
+            });
+
         // Firebase에 새로운 제품 등록
     };
     const handleChange = (e) => {
