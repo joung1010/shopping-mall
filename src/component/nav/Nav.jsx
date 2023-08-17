@@ -1,4 +1,3 @@
-import React, {useEffect, useState} from 'react';
 import {FaPencil} from 'react-icons/fa6'
 import {BiShoppingBag} from 'react-icons/bi'
 import {Link} from 'react-router-dom'
