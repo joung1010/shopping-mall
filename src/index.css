@@ -15,6 +15,9 @@ body {
     @apply flex flex-col items-center;
 }
 
+input {
+    @apply p-4 outline-none border-gray-300 my-1
+}
 
 #root {
     @apply w-full max-w-screen-2xl;
