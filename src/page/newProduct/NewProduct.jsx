@@ -6,16 +6,26 @@ import DatabaseService from "../../service/database/databaseService";
 function NewProduct(props) {
     const [products, setProducts] = useState({});
     const [file, setFile] = useState();
+    const [isUploading, setIsUploading] = useState(false);
+    const [success, setSuccess] = useState();
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setIsUploading(true);
         // 제품 사진을 업로드 후 URL 획득
         const uploader = new UploadService();
         const dbService = new DatabaseService();
         uploader.upload(file)
             .then(url => {
-                dbService.setProduct(products,url);
-            });
+                dbService.setProduct(products,url)
+                    .then(() => {
+                        setSuccess('성공적으로 제품이 추가되었습니다.');
+                        setTimeout(() => {
+                            setSuccess(null);
+                        }, 4000);
+                    });
+            })
+            .finally(()=> setIsUploading(false));
 
         // Firebase에 새로운 제품 등록
     };
@@ -30,8 +40,9 @@ function NewProduct(props) {
     };
     return (
         <section>
+            <h2>새로운 제품 등록</h2>
+            {success && <p>✅{success}</p>}
             {file && <img src={URL.createObjectURL(file)} alt="upload File"/>}
-
             <form onSubmit={handleSubmit}>
                 <input type="file" accept='image/*' name='file' required onChange={handleChange}/>
                 <input type="text" name='title' value={products.title ?? ''} placeholder='제품명' required
@@ -44,7 +55,10 @@ function NewProduct(props) {
                        onChange={handleChange}/>
                 <input type="text" name='options' value={products.options ?? ''} placeholder='옵션들은 콤마(,)로 구분' required
                        onChange={handleChange}/>
-                <Button text={'제품 등록'}/>
+                <Button text={isUploading ? '업로드중...' : '제품 등록'}
+                        isLoading={isUploading}
+                    disabled={isUploading}
+                />
             </form>
         </section>
     );

@@ -1,13 +1,12 @@
 import React from 'react';
 
-function Button({text,onClick}) {
+function Button({text,onClick,isLoading}) {
     return (
-            <button
-                onClick={onClick}
-                className='bg-brand text-white py-2 px-4 rounded-sm hover:brightness-110'
-            >
-                {text}
-            </button>
+        <div className='bg-brand text-white p-2 rounded-sm hover:brightness-110 w-32 text-center'>
+            {isLoading && <div className='fixed opacity-75 animate-spin mx-1 w-6 h-6 border-[3px] border-current border-t-transparent text-gray-800 rounded-full dark:text-white'/>}
+            <button onClick={onClick} className='w-full h-full'>{text}</button>
+        </div>
+
     );
 }
 

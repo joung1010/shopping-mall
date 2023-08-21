@@ -10,14 +10,15 @@ class DatabaseService {
         this.#database = getFireBaseDatabase();
     }
 
-    setProduct(product, image) {
-        this.#write({
+    async setProduct(product, image) {
+        return this.#write({
             ...product,
             price: parseInt(product.price),
             image,
             options: product.options.split(','),
         });
     }
+
     remove(item) {
         remove(this.#getRef(item.id));
     }
@@ -29,6 +30,7 @@ class DatabaseService {
         }));
         return readValue;
     }
+
     #write(item) {
         const id = this.#getId();
         set(this.#getRef(id), {
@@ -36,6 +38,7 @@ class DatabaseService {
             id,
         });
     }
+
     #getRef(id) {
         return ref(this.#database, `/products/${id}`);
     }
