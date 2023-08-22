@@ -1,8 +1,13 @@
 import React from 'react';
+import Products from "../../component/products/Products";
+import Banner from "../../component/banner/Banner";
 
 function Home(props) {
     return (
-        <div>Home</div>
+        <section>
+            <Banner/>
+            <Products/>
+        </section>
     );
 }
 
