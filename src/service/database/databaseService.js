@@ -1,4 +1,4 @@
-import {ref, set, remove, onValue} from "firebase/database";
+import {ref, set, remove, onValue, get} from "firebase/database";
 import {getFireBaseDatabase} from "../config/firebase";
 import {v4 as uuid} from 'uuid';
 
@@ -19,16 +19,21 @@ class DatabaseService {
         });
     }
 
+    async getProducts() {
+        return this.#read(this.#getRef());
+    }
+
+
     remove(item) {
         remove(this.#getRef(item.id));
     }
 
-    read(callback) {
-        const readValue = onValue(this.#getRef(), (snapshot => {
-            const value = snapshot.val();
-            value && callback(value);
-        }));
-        return readValue;
+    #read(ref) {
+       return get(ref)
+           .then(snapshot => {
+           if(snapshot.exists()) return Object.values(snapshot.val());
+               return [];
+       });
     }
 
     #write(item) {
@@ -40,7 +45,7 @@ class DatabaseService {
     }
 
     #getRef(id) {
-        return ref(this.#database, `/products/${id}`);
+        return ref(this.#database, id ? `/products/${id}` : `/products`);
     }
 
     #getId() {
