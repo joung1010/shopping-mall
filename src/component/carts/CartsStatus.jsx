@@ -9,7 +9,7 @@ function CartsStatus(props) {
     const {data:products} = useQuery(['carts'],()=>new DatabaseService().getCarts(uid), {
         staleTime: 1000 * 60 * 5,
     });
-    const hasProducts = Object.keys(products).length > 0;
+    const hasProducts = products ? Object.keys(products).length > 0 : false;
     return (
         <div className='relative'>
             <AiOutlineShoppingCart className='text-4xl'/>
