@@ -16,7 +16,7 @@ export  function LoginProvider({children}) {
     }, []);
     return (
         <LoginContext.Provider
-            value = {{user,login:loginService.loginPop,logout:loginService.logout}}
+            value = {{user, uid:user && user.uid, login:loginService.loginPop,logout:loginService.logout}}
         >
             {children}
         </LoginContext.Provider>

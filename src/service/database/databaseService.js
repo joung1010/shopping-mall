@@ -24,19 +24,42 @@ class DatabaseService {
 
     async getProducts() {
         const productRef = this.#getRef('/products');
-        return this.#read(productRef);
+        return this.#read(productRef)
+            .then(product => {
+                if(!product) return [];
+                return product;
+            });
+    }
+
+    async addOrUpdateCart(userId,product) {
+        return this.#write(
+            this.#getRef(`/carts/${userId}/${product.id}`)
+            , product
+        )
+    }
+
+    async getCarts(userId) {
+        return this.#read(this.#getRef(`/carts/${userId}`))
+            .then((carts)=> {
+                if(!carts) return {};
+                return carts;
+            });
+    }
+
+    async removeCart(userId,productId) {
+        return this.#remove(this.#getRef(`carts/${userId}/${productId}`));
     }
 
 
-    remove(item) {
-        remove(this.#getRef(item.id));
+    #remove(ref) {
+       return remove(ref);
     }
 
     #read(ref) {
        return get(ref)
            .then(snapshot => {
            if(snapshot.exists()) return Object.values(snapshot.val());
-               return [];
+               return null;
        });
     }
 

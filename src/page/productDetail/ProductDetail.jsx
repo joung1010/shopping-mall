@@ -1,15 +1,27 @@
 import React, {useState} from 'react';
 import {useLocation, } from "react-router-dom";
 import Button from "../../component/ui/Button";
+import {useLoginApi} from "../../context/LoginContext";
+import DatabaseService from "../../service/database/databaseService";
 
 function ProductDetail(props) {
-    const {state:{product:{image,title,category,price,description,options}}} =useLocation();
+    const {uid} = useLoginApi();
+    const {state:{product:{id,image,title,category,price,description,options}}} =useLocation();
     const [selected, setSelected] = useState(options && options[0]);
     const handleChange = (e) => {
         setSelected(e.target.value);
     };
     const handleClick = (e) => {
-
+        const database = new DatabaseService();
+        const product = {
+            id,
+            image,
+            title,
+            price,
+            selected,
+            quantity: 1,
+        };
+        database.addOrUpdateCart(uid,product);
     };
     return (
         <>
