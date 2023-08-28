@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import {useLoginApi} from "../../context/LoginContext";
 import User from "../user/User";
 import Button from "../ui/Button";
+import CartsStatus from "../carts/CartsStatus";
 
 
 function Nav(props) {
@@ -17,7 +18,7 @@ function Nav(props) {
             </Link>
             <nav className='flex items-center gap-4 font-semibold'>
                 <Link to='/products'>Products</Link>
-                {user && <Link to='/carts'>Carts</Link>}
+                {user && <Link to='/carts'><CartsStatus/></Link>}
                 {user && user.isAdmin && <Link to='/products/new' className='text-2xl'><FaPencil/></Link>}
                 {user && <User user={user}/>}
                 {!user && <Button text='Login' onClick={login}/>}
