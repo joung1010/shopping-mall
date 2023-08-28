@@ -1,4 +1,4 @@
-import {ref, set, remove, onValue, get} from "firebase/database";
+import {ref, set, remove, get} from "firebase/database";
 import {getFireBaseDatabase} from "../config/firebase";
 import {v4 as uuid} from 'uuid';
 
