@@ -11,16 +11,20 @@ class DatabaseService {
     }
 
     async setProduct(product, image) {
-        return this.#write({
+        const id = this.#getId();
+        const productRef = this.#getRef(`/products/${id}`);
+        return this.#write(productRef,{
             ...product,
             price: parseInt(product.price),
             image,
             options: product.options.split(','),
+            id,
         });
     }
 
     async getProducts() {
-        return this.#read(this.#getRef());
+        const productRef = this.#getRef('/products');
+        return this.#read(productRef);
     }
 
 
@@ -36,16 +40,15 @@ class DatabaseService {
        });
     }
 
-    #write(item) {
-        const id = this.#getId();
-        set(this.#getRef(id), {
+    #write(ref,item) {
+
+        set(ref, {
             ...item,
-            id,
         });
     }
 
-    #getRef(id) {
-        return ref(this.#database, id ? `/products/${id}` : `/products`);
+    #getRef(url) {
+        return ref(this.#database, url);
     }
 
     #getId() {
