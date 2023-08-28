@@ -18,11 +18,9 @@ function Carts(props) {
     const totalPrice = hasProducts && products.reduce((pre, acc) => pre + parseInt(acc.price) + acc.quantity, 0);
 
 
-    {
-        isLoading && <p>Loading...</p>
-    }
     return (
         <section>
+            {isLoading && <p>Loading...</p>}
             <p>내 장바구니</p>
             {!hasProducts && <p>등록된 물품이 없습니다.</p>}
             {hasProducts && <>
