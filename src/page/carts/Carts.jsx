@@ -1,20 +1,15 @@
 import React from 'react';
-import {useQuery} from "@tanstack/react-query";
-import DatabaseService from "../../service/database/databaseService";
-import {useLoginApi} from "../../context/LoginContext";
 import CartItem from "../../component/cartItem/CartItem";
 import Price from "../../component/price/Price";
 import {BsFillPlusCircleFill} from "react-icons/bs";
 import {FaEquals} from "react-icons/fa";
 import Button from "../../component/ui/Button";
+import useCarts from "../../hooks/useCarts";
 
 const SHIPPING = 3000;
 
 function Carts(props) {
-    const {uid} = useLoginApi();
-    const {isLoading, data: products} = useQuery(['carts'], () => new DatabaseService().getCarts(uid), {
-        staleTime: 1000 * 60 * 5,
-    });
+    const {cartsQuery: {isLoading, data: products}} = useCarts();
     const hasProducts = products && products.length > 0;
     const totalPrice = hasProducts && products.reduce((pre, acc) => pre + parseInt(acc.price) * acc.quantity, 0);
 
@@ -27,7 +22,7 @@ function Carts(props) {
             {hasProducts && <>
                 <ul className='border-b border-gray-300 mb-8 p-4'>
                     {products &&
-                    products.map(product => (<CartItem key={product.id} product={product} uid={uid}/>))
+                    products.map(product => (<CartItem key={product.id} product={product} />))
                     }
                 </ul>
             </>}

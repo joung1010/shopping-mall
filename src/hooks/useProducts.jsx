@@ -1,10 +1,9 @@
 import {useMutation, useQueryClient,useQuery} from "@tanstack/react-query";
 import DatabaseService from "../service/database/databaseService";
 
-const dbService = new DatabaseService();
-
 export  default function useProducts() {
     const queryClient = useQueryClient();
+    const dbService = new DatabaseService();
 
     const productsQuery = useQuery(
         ['products'], () => dbService.getProducts()
