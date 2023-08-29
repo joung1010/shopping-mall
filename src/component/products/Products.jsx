@@ -1,16 +1,9 @@
 import React from 'react';
-import {useQuery} from "@tanstack/react-query";
-import DatabaseService from "../../service/database/databaseService";
 import ProductCard from "../../productCard/ProductCard";
+import useProducts from "../../hooks/useProducts";
 
 function Products(props) {
-    const {isLoading, error, data: products} = useQuery(
-        ['products'], () => new DatabaseService().getProducts()
-        , {
-            staleTime: 1000 * 60 * 1,
-        }
-    );
-
+    const {productsQuery:{isLoading, error, data: products}} = useProducts();
     return (
         <>
             {isLoading && <p>Loading...</p>}

@@ -1,22 +1,14 @@
 import React, {useState} from 'react';
 import Button from "../../component/ui/Button";
 import UploadService from "../../service/upload/uploadService";
-import DatabaseService from "../../service/database/databaseService";
-import {useMutation, useQueryClient} from "@tanstack/react-query";
-
-const dbService = new DatabaseService();
+import useProducts from "../../hooks/useProducts";
 
 function NewProduct(props) {
     const [products, setProducts] = useState({});
     const [file, setFile] = useState();
     const [isUploading, setIsUploading] = useState(false);
     const [success, setSuccess] = useState();
-    const queryClient = useQueryClient();
-    const addProduct = useMutation(
-        {
-            mutationFn: ({products, url}) => dbService.setProduct(products, url),
-            onSuccess: () => queryClient.invalidateQueries(['products']),/*기본적인 해동을 정의*/
-        });
+    const {addProduct} = useProducts();
 
     const handleSubmit = (e) => {
         e.preventDefault();
